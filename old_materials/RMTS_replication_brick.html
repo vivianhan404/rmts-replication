@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Help Sesame Street Friends Match It!!</title>
+    <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugin-image-button-response.js"></script>
+    <script src="jspsych/plugin-html-keyboard-response.js"></script>
+    <script src="jspsych/plugin-video-button-response.js"></script>
+    <script src="jspsych/plugin-html-button-response.js"></script>
+    <script src="jspsych/plugin-instructions.js"></script>
+    <script src="jspsych/plugin-survey-html-form.js"></script>
+    <script src="jspsych/plugin-survey.js"></script>
+    <script src="jspsych/plugin-preload.js"></script>
+  <script src="jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href = "experiment.css">
+  <link rel="icon" type="image/x-icon" href="raw_stimuli/favicon.ico">
+
+</head>
+
+<body></body>
+<script>
+
+const SKIP_ALLOWED = false;
+
+const jsPsych = initJsPsych({override_safe_mode: true});
+var timeline = [];
+
+function getChildID() {
+     urlvars = jsPsych.data.urlVariables()
+     child = urlvars.child
+     /* console.log("child id: " + child) */
+     return child
+ }
+ function createUID() {
+     UID = "TEST-" + Date.now() + "_K" + Math.floor((Math.random() * 100000000) + 1);
+     return UID
+ }
+
+ var childID = getChildID();
+ if (childID) {}
+ else {
+     childID = createUID()
+ }
+
+jsPsych.data.addProperties({
+    childID: childID
+});
+
+ var preload = {
+     type: jsPsychPreload,
+     auto_preload: true
+ }
+ timeline.push(preload)
+
+ var instructions = [
+     {
+         type: jsPsychHtmlButtonResponse,
+             stimulus: "<font size = '4'>This study requires your browser to be in Full Screen. Please put your browser in Full Screen mode now.</font>",
+             choices: [1],
+             button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"]
+         },
+
+     {
+         type: jsPsychHtmlButtonResponse,
+         stimulus: "<font size = '4'>During this study your child will see 8 matching tasks.  <br><br>For each task, your child will be asked to pick the best match. They can point and you can click their answer, or they can click for themselves.  <br><br>Please do not add any additional explanations to the task, and try not to influence your child's answer.  <br><br>There is no right answer, we're just interested in how children of this age think!<br><br><br></font>",
+         choices: [1],
+         button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"]
+ }];
+ timeline=timeline.concat(instructions)
+
+ var intro = [
+     {type: jsPsychVideoButtonResponse,
+      stimulus: ["raw_stimuli/nicole_intro.mp4"],
+      width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     }]
+
+timeline = timeline.concat(intro);
+
+ var welcome = [
+     {type: jsPsychVideoButtonResponse,
+      stimulus: ["stimuli_reduced/Movie1_Introduction.mp4"],
+      width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+
+      //on_load: hideAndShowNext
+     },
+
+     {type: jsPsychVideoButtonResponse,
+      stimulus: ["stimuli_reduced/Movie2_Instructions.mp4"],
+      width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     },
+ ]
+
+ timeline = timeline.concat(welcome);
+
+ var inclusiontrial1 = [
+     {type: jsPsychVideoButtonResponse,
+      stimulus: ["stimuli_reduced/Movie3_Inclusion1_video.mp4"],
+      width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     },
+     {type: jsPsychImageButtonResponse,
+      stimulus: "raw_stimuli/A/Movie4_Inclusion1_response.png",
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     },
+     {type: jsPsychVideoButtonResponse,
+      stimulus: ["stimuli_reduced/Movie5_LetsTryAnother.mp4"],
+      width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     }]
+ timeline = timeline.concat(inclusiontrial1);
+
+ var inclusiontrial2 = [
+     {type: jsPsychVideoButtonResponse,
+      stimulus: ["stimuli_reduced/Movie6_Inclusion2_video.mp4"],
+      width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     },
+     {type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/A/Movie7_Inclusion2_response.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     },
+     {type: jsPsychVideoButtonResponse,
+      stimulus: ["stimuli_reduced/Movie8_LetsStart.mp4"],
+      width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     }]
+ timeline = timeline.concat(inclusiontrial2);
+
+// STEP 1: DEFINE ALL UNIQUE STIMULI
+var Trial1_A1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie9_A_EasyMonotonic_1_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+
+var Trial1_A2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/A/Movie10_A_EasyMonotonic_1_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+
+var Trial2_A1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie12_A_EasySymmetric_1_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+
+var Trial2_A2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/A/Movie13_A_EasySymmetric_1_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+
+var Trial3_A1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie15_A_HardMonotonic_1_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+     
+var Trial3_A2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/A/Movie16_A_HardMonotonic_1_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+var Trial4_A1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie18_A_HardSymmetric_1_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+     
+var Trial4_A2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/A/Movie19_A_HardSymmetric_1_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+
+var Trial5_A1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie21_A_EasyMonotonic_2_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+     
+var Trial5_A2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/A/Movie22_A_EasyMonotonic_2_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+
+var Trial6_A1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie24_A_EasySymmetric_2_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+     
+var Trial6_A2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/A/Movie25_A_EasySymmetric_2_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+
+var Trial7_A1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie27_A_HardMonotonic_2_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+     
+var Trial7_A2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/A/Movie28_A_HardMonotonic_2_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+
+var Trial8_A1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie30_A_HardSymmetric_2_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+     
+var Trial8_A2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/A/Movie31_A_HardSymmetric_2_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+
+////////////////////
+var Trial1_B1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie9_B_EasyMonotonic_1_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+
+var Trial1_B2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/B/Movie10_B_EasyMonotonic_1_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+
+var Trial2_B1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie12_B_EasySymmetric_1_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+
+var Trial2_B2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/B/Movie13_B_EasySymmetric_1_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+
+var Trial3_B1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie15_B_HardMonotonic_1_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+     
+var Trial3_B2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/B/Movie16_B_HardMonotonic_1_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+var Trial4_B1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie18_B_HardSymmetric_1_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+     
+var Trial4_B2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/B/Movie19_B_HardSymmetric_1_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+
+var Trial5_B1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie21_B_EasyMonotonic_2_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+     
+var Trial5_B2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/B/Movie22_B_EasyMonotonic_2_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+
+var Trial6_B1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie24_B_EasySymmetric_2_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+     
+var Trial6_B2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/B/Movie25_B_EasySymmetric_2_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+
+var Trial7_B1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie27_B_HardMonotonic_2_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+     
+var Trial7_B2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/B/Movie28_B_HardMonotonic_2_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+
+var Trial8_B1 = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie30_B_HardSymmetric_2_video.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+     
+var Trial8_B2 = {
+    type: jsPsychImageButtonResponse,
+      stimulus: ["raw_stimuli/B/Movie31_B_HardSymmetric_2_test.png"],
+      stimulus_width: 1024,
+     stimulus_height: 576,
+      choices: ["1", "2"],
+      button_html: ["<img src='raw_stimuli/green_button.png' width='150' height='150'></img>", "<img src='raw_stimuli/blue_button.png' width='150' height='150'></img>"],
+      margin_vertical: '-10px',
+      margin_horizontal: '200px',
+     };
+
+/////////////////
+
+var SEVEN_MORE = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie11_7more.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+
+var SIX_MORE = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie14_6more.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+
+var FIVE_MORE = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie17_5more.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+
+var FOUR_MORE = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie20_4more.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+
+var THREE_MORE = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie23_3more.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+
+var TWO_MORE = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie26_2more.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };
+
+var ONE_MORE = {
+    type: jsPsychVideoButtonResponse,
+    stimulus: ["stimuli_reduced/Movie29_1more.mp4"],
+    width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: SKIP_ALLOWED,
+      //on_load: hideAndShowNext
+     };    
+
+// put stimuli into trials
+
+// create trials for condition A
+
+var trial1a = []
+trial1a.push(Trial1_A1)
+trial1a.push(Trial1_A2)
+trial1a.push(SEVEN_MORE)
+
+var trial2a = []
+trial2a.push(Trial2_A1)
+trial2a.push(Trial2_A2)
+trial2a.push(SIX_MORE)
+
+var trial3a = []
+trial3a.push(Trial3_A1)
+trial3a.push(Trial3_A2)
+trial3a.push(FIVE_MORE)
+
+var trial4a = []
+trial4a.push(Trial4_A1)
+trial4a.push(Trial4_A2)
+trial4a.push(FOUR_MORE)
+
+var trial5a = []
+trial5a.push(Trial5_A1)
+trial5a.push(Trial5_A2)
+trial5a.push(THREE_MORE)
+
+var trial6a = []
+trial6a.push(Trial6_A1)
+trial6a.push(Trial6_A2)
+trial6a.push(TWO_MORE)
+
+var trial7a = []
+trial7a.push(Trial7_A1)
+trial7a.push(Trial7_A2)
+trial7a.push(ONE_MORE)
+
+var trial8a = []
+trial8a.push(Trial8_A1)
+trial8a.push(Trial8_A2)
+
+// create trials for condition B
+
+var trial1b = []
+trial1b.push(Trial1_B1)
+trial1b.push(Trial1_B2)
+trial1b.push(SEVEN_MORE)
+
+var trial2b = []
+trial2b.push(Trial2_B1)
+trial2b.push(Trial2_B2)
+trial2b.push(SIX_MORE)
+
+var trial3b = []
+trial3b.push(Trial3_B1)
+trial3b.push(Trial3_B2)
+trial3b.push(FIVE_MORE)
+
+var trial4b = []
+trial4b.push(Trial4_B1)
+trial4b.push(Trial4_B2)
+trial4b.push(FOUR_MORE)
+
+var trial5b = []
+trial5b.push(Trial5_B1)
+trial5b.push(Trial5_B2)
+trial5b.push(THREE_MORE)
+
+var trial6b = []
+trial6b.push(Trial6_B1)
+trial6b.push(Trial6_B2)
+trial6b.push(TWO_MORE)
+
+var trial7b = []
+trial7b.push(Trial7_B1)
+trial7b.push(Trial7_B2)
+trial7b.push(ONE_MORE)
+
+var trial8b = []
+trial8b.push(Trial8_B1)
+trial8b.push(Trial8_B2)
+
+//create conditions
+
+var cond_A = [trial1a, trial2a, trial3a, trial4a, trial5a, trial6a, trial7a, trial8a]
+var cond_B = [trial1b, trial2b, trial3b, trial4b, trial5b, trial6b, trial7b, trial8b]
+
+var all_conditions = {'A':cond_A, 'B':cond_B};
+
+ // randomly assign a condition
+var condition_assignment = jsPsych.randomization.sampleWithoutReplacement(['A', 'B'], 1)[0];
+
+
+// Save the condition to the jsPsych data
+ jsPsych.data.addProperties({'condition': condition_assignment}); 
+
+var selected_condition_trials = all_conditions[condition_assignment];
+
+ timeline = timeline.concat(selected_condition_trials.flat());
+
+var done =    
+    {type: jsPsychVideoButtonResponse,
+      stimulus: ["stimuli_reduced/Movie32_AllDone.mp4"],
+      width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: true,
+
+     // on_load: hideAndShowNext
+     }
+ timeline.push(done);
+
+var outro =
+    {type: jsPsychVideoButtonResponse,
+      stimulus: ["stimuli_reduced/Movie33_Outro.mp4"],
+      width: 1024,
+     height: 576,
+      choices: ["1"],
+      button_html: ["<img src='raw_stimuli/purplearrow.png'></img>"],
+      response_allowed_while_playing: true,
+      //on_load: hideAndShowNext
+      on_start: function() {
+          saveData(childID, jsPsych.data.get().csv());
+      }
+     }
+ timeline.push(outro);
+
+var site = '<a href="https://eccl.mit.edu">https://www.eccl.mit.edu</a>'
+var debrief_string= "We showed your child a sample box with three shapes. Children were asked to pick which of two other boxes of shapes was the best match for the first box. One box was a distractor with an irrelevant relationship among the shapes; the other box (the matching box) had a relationship among the shapes similar to the relationship in the first box (e.g. the three shapes progressively got bigger or smaller, or the relationship was symmetric with two large shapes flanking a small shape or vice versa). <br><br>Across trials, children saw both 'easy' matches (the relationships between the sample and the match were identical) and 'hard' matches (the relationship in the match was the inverse of the relationship in the sample-- for instance if the shapes in the sample box had gone from smallest on the left to largest on the right, the shapes in the box went from largest on the left to smallest on the right). Previous, in-person research had suggested that although young children could succeed on easy matches, they struggled with hard matches. Here we aimed to replicate the result in an online study </br></br><br> This is the first study in a planned series of studies on children's understanding of relational matches. We think that three-year-olds may struggle with this kind of task because children are looking not only at the relationship between the shapes in the boxes but also at the relationship among the boxes themselves. In the current set up, there is a matching box and a distractor box: thus, one of the boxes has no relationship at all with the others. We believe that young children will have an easier time recognizing relational matches in a context where every box has a match (i.e., there are no distractors). That is, we believe that if we show children two sample boxes (each with a different relationship among the shapes) and two kinds of matching boxes (each matching to one of the relationships), children will be more likely to recognize the contrasting relationships and succeed at the task. However, we needed to replicate the failure first before going on to test the conditions that might lead children to succeed.</br></br> <br><b>Why is this important?</b></br></br><br> This study is important for three reasons. First, replicating children's failure to infer abstract, non-identical relationships will show both that the original finding is robust and that we can replicate in-person laboratory experiments online. Second, this will allow us to build on the initial study, potentially showing that even young children can in fact infer abstract, non-identical, higher-order relationships when they are not faced with irrelevant distractors. This would suggest the importance of how we teach and present information to young children. Showing children one matching pair and one distractor may make it difficult for children to know what kind of relationship they should attend to; by contrast, showing children two different matching relationships may serve to highlight the contrast and allow children to more readily detect the alignment between the samples and the matches. Overall, children may do better in 'errorless' contexts where 'everything has an answer' than in contexts where one answer is right and one is wrong.</br></br> <br>If you want to learn more about studies similar to this one, please visit our lab website at " + site +  "<br><br><br><b><center>The experiment is complete. Thank you for participating! You will receive an email from Lookit with your payment information. Please close this window.</center></b>"
+    var debrief = {type: jsPsychHtmlKeyboardResponse,
+                    stimulus: debrief_string
+     }
+ timeline.push(debrief);
+
+ function saveData(name, data) {
+     var xhr = new XMLHttpRequest();
+     xhr.open('POST', 'record_data.php');
+     xhr.setRequestHeader('Content-Type', 'application/json');
+     xhr.send(JSON.stringify({
+         filename: name,
+         data: data
+     }));
+ }
+ function createUID() {
+     UID = "T" + Date.now() + "_K" + Math.floor((Math.random() * 100000000) + 1);
+     return UID
+ }
+
+jsPsych.run(timeline);
+
+</script>
+</html>
