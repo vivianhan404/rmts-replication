@@ -34,29 +34,35 @@ def crop_button_2(old_name, new_name, x1, y1, w, h):
     )
     clip.write_videofile(new_name)
 
-# trials = [
-#     "EasyMonotonic_1",
-#     "EasySymmetric_1",
-#     "HardMonotonic_1",
-#     "HardSymmetric_1",
-#     "EasyMonotonic_2",
-#     "EasySymmetric_2",
-#     "HardMonotonic_2",
-#     "HardSymmetric_2",
-# ]
-# for idx, name in enumerate(trials):
-#     old_n = int(3 * idx + 9)
-#     new_n = int(2 * idx + 7)
+trials = [
+    "EasyMonotonic_1",
+    "EasySymmetric_1",
+    "HardMonotonic_1",
+    "HardSymmetric_1",
+    "EasyMonotonic_2",
+    "EasySymmetric_2",
+    "HardMonotonic_2",
+    "HardSymmetric_2",
+]
 
 fps = 30
-# left
-left = (15,470,850,450)
-# right
-right = (1055,470,850,450)
-crop_button_2(f'old_materials/mp4/Movie3_Inclusion1_video.mp4', f'mp4/Movie3_Inclusion1_left.mp4', *left)
-crop_button_2(f'old_materials/mp4/Movie3_Inclusion1_video.mp4', f'mp4/Movie3_Inclusion1_right.mp4', *right)
+left = (0,470,825,425)
+right = (1095,470,825,425)
 
-crop_button_2(f'old_materials/mp4/Movie6_Inclusion2_video.mp4', f'mp4/Movie5_Inclusion2_left.mp4', *left)
-crop_button_2(f'old_materials/mp4/Movie6_Inclusion2_video.mp4', f'mp4/Movie5_Inclusion2_right.mp4', *right)
+for idx, name in enumerate(trials):
+    old_n = int(3 * idx + 9)
+    new_n = int(2 * idx + 7)
+    crop_button_2(f'old_materials/mp4/Movie{old_n}_A_{name}_video.mp4', 
+                    f'mp4/Movie{new_n}_A_{name}_left.mp4', *left)
+    crop_button_2(f'old_materials/mp4/Movie{old_n}_A_{name}_video.mp4', 
+                    f'mp4/Movie{new_n}_A_{name}_right.mp4', *right)
+
+    crop_button_2(f'old_materials/mp4/Movie{old_n}_B_{name}_video.mp4', 
+                    f'mp4/Movie{new_n}_B_{name}_left.mp4', *left)
+    crop_button_2(f'old_materials/mp4/Movie{old_n}_B_{name}_video.mp4', 
+                    f'mp4/Movie{new_n}_B_{name}_right.mp4', *right)
+
+# crop_button_2(f'old_materials/mp4/Movie6_Inclusion2_video.mp4', f'mp4/Movie5_Inclusion2_left.mp4', *left)
+# crop_button_2(f'old_materials/mp4/Movie6_Inclusion2_video.mp4', f'mp4/Movie5_Inclusion2_right.mp4', *right)
 
 
