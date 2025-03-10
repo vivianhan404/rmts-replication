@@ -1,7 +1,7 @@
 import cv2
 from moviepy import VideoFileClip
 
-def crop_buttons(old_name, new_name, x, y, h, w):
+def crop_buttons(old_name, new_name, x, y, w, h):
     cap = cv2.VideoCapture(old_name)
     fps, num_frames = cap.get(cv2.CAP_PROP_FPS), cap.get(cv2.CAP_PROP_FRAME_COUNT)
 
@@ -25,6 +25,15 @@ def crop_video(old_name, new_name):
     )
     clip.write_videofile(new_name)
 
+def crop_button_2(old_name, new_name, x1, y1, w, h):
+    clip = (
+        VideoFileClip(old_name)
+        .subclipped(0, -8)
+        .with_volume_scaled(0)
+        .cropped(x1=x1,y1=y1,width=w,height=h)
+    )
+    clip.write_videofile(new_name)
+
 # trials = [
 #     "EasyMonotonic_1",
 #     "EasySymmetric_1",
@@ -41,13 +50,13 @@ def crop_video(old_name, new_name):
 
 fps = 30
 # left
-left = (15,470,450,850)
+left = (15,470,850,450)
 # right
-right = (1055,470,450,850)
-crop_buttons(f'mp4/Movie3_Inclusion1_video.mp4', f'cropped_mp4/Movie3_Inclusion1_left.mp4', *left)
-crop_buttons(f'mp4/Movie3_Inclusion1_video.mp4', f'cropped_mp4/Movie3_Inclusion1_right.mp4', *right)
+right = (1055,470,850,450)
+crop_button_2(f'old_materials/mp4/Movie3_Inclusion1_video.mp4', f'mp4/Movie3_Inclusion1_left.mp4', *left)
+crop_button_2(f'old_materials/mp4/Movie3_Inclusion1_video.mp4', f'mp4/Movie3_Inclusion1_right.mp4', *right)
 
-crop_buttons(f'mp4/Movie6_Inclusion2_video.mp4', f'cropped_mp4/Movie5_Inclusion2_left.mp4', *left)
-crop_buttons(f'mp4/Movie6_Inclusion2_video.mp4', f'cropped_mp4/Movie5_Inclusion2_right.mp4', *right)
+crop_button_2(f'old_materials/mp4/Movie6_Inclusion2_video.mp4', f'mp4/Movie5_Inclusion2_left.mp4', *left)
+crop_button_2(f'old_materials/mp4/Movie6_Inclusion2_video.mp4', f'mp4/Movie5_Inclusion2_right.mp4', *right)
 
 
