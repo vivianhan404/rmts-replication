@@ -26,9 +26,21 @@ function makeVideoTrial(video_name) {
 }
 
 // TODO fix formatting here
-function makeChoiceTrial(image_name) {
-    const name_base = image_name.substring(0, image_name.indexOf("."));
+function makeChoiceTrial(video_name, left_button, right_button) {
+  const button_name = [left_button, right_button];
   return {
+    type: jsPsychVideoButtonResponse,
+    stimulus: [`${BASE_DIR}/mp4/${video_name}`],
+    width: 1024,
+    height: 250,
+    choices: ["0", "1"],
+    button_html: (choice, choice_index) =>
+      `<button class="jspsych-btn" style="background: gold">
+        <video width="453" height="240" autoplay>
+          <source src="${BASE_DIR}/mp4/${button_name[choice_index]}" type="video/mp4">
+        </video>
+      </button>`,
+    response_allowed_while_playing: SKIP_ALLOWED,
     // extensions: [{ type: chsRecord.TrialRecordExtension }],  // TODO turn on
   };
 }
@@ -54,19 +66,10 @@ function makeChoiceTrial(image_name) {
 //     // extensions: [{ type: chsRecord.TrialRecordExtension }],  // TODO turn on
 //   };
 
-const video_name = "Movie9_A_EasyMonotonic_1_video.mp4";
-const button = "Movie9_A_EasyMonotonic_1_left.mp4"
-const trial = {
-    type: jsPsychVideoButtonResponse,
-    stimulus: [`${BASE_DIR}/mp4/${video_name}`],
-    width: 1024,
-    height: 576,
-    choices: ["NEXT"],
-    button_html: (choice, choice_index) =>
-      `<button class="jspsych-btn"><video><source src="${BASE_DIR}/mp4/${button}" type="video/mp4"></video></button>`,
-    response_allowed_while_playing: SKIP_ALLOWED,
-  };
-
+const video_name = "Movie5_Inclusion2_top.mp4";
+const left_button = "Movie5_Inclusion2_left.mp4";
+const right_button = "Movie5_Inclusion2_right.mp4";
+const trial = makeChoiceTrial(video_name, left_button, right_button);
 timeline.push(trial);
 
 //  ===== SETUP =============================================
