@@ -45,8 +45,13 @@ right = (1095,470,825,425)
 #     crop_button_2(f'old_materials/mp4/Movie{old_n}_B_{name}_video.mp4', 
 #                     f'mp4/Movie{new_n}_B_{name}_right.mp4', *right)
 
-crop_button_2('old_materials/mp4/Movie3_Inclusion1_video.mp4', 'mp4/Movie3_Inclusion1_left.mp4', *left)
-crop_button_2('old_materials/mp4/Movie3_Inclusion1_video.mp4', 'mp4/Movie3_Inclusion1_right.mp4', *right)
-crop_video('old_materials/mp4/Movie3_Inclusion1_video.mp4', 'mp4/Movie3_Inclusion1_top.mp4')
+# crop_button_2('old_materials/mp4/Movie3_Inclusion1_video.mp4', 'mp4/Movie3_Inclusion1_left.mp4', *left)
+# crop_button_2('old_materials/mp4/Movie3_Inclusion1_video.mp4', 'mp4/Movie3_Inclusion1_right.mp4', *right)
+# crop_video('old_materials/mp4/Movie3_Inclusion1_video.mp4', 'mp4/Movie3_Inclusion1_top.mp4')
 
-
+clip = (
+    VideoFileClip("old_materials/mp4/Movie8_LetsStart.mp4")
+    .subclipped(0, -8)
+    .cropped(x1=0,y1=0,width=1920,height=830)
+)
+clip.write_videofile("Movie6_LetsStart.mp4")
