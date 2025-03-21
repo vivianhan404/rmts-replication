@@ -19,18 +19,19 @@ function makeVideoTrial(video_name) {
     height: 576,
     choices: ["NEXT"],
     button_html: (choice, choice_index) =>
-      `<button class="jspsych-btn"><img src="${BASE_DIR}/img/purplearrow.png" alt="NEXT"></img></button>`,
+      `<button class="jspsych-btn">
+        <img src="${BASE_DIR}/img/purplearrow.png" alt="NEXT"></img>
+      </button>`,
     response_allowed_while_playing: SKIP_ALLOWED,
     // extensions: [{ type: chsRecord.TrialRecordExtension }],  // TODO turn on
   };
 }
 
-// TODO fix formatting here
-function makeChoiceTrial(video_name, left_button, right_button) {
+function makeChoiceTrial(top_video, left_button, right_button) {
   const button_name = [left_button, right_button];
   return {
     type: jsPsychVideoButtonResponse,
-    stimulus: [`${BASE_DIR}/mp4/${video_name}`],
+    stimulus: [`${BASE_DIR}/mp4/${top_video}`],
     width: 1024,
     height: 250,
     choices: ["0", "1"],
@@ -40,6 +41,8 @@ function makeChoiceTrial(video_name, left_button, right_button) {
           <source src="${BASE_DIR}/mp4/${button_name[choice_index]}" type="video/mp4">
         </video>
       </button>`,
+    prompt:
+      "PARENTS: please click the button your child points to if they are unable to click themselves",
     response_allowed_while_playing: SKIP_ALLOWED,
     // extensions: [{ type: chsRecord.TrialRecordExtension }],  // TODO turn on
   };
@@ -47,28 +50,9 @@ function makeChoiceTrial(video_name, left_button, right_button) {
 
 // ===== SANDBOX ===========================================
 
-// const test_image = "Movie4_Inclusion_1_test_crop.png";
-// const left_button = "Movie4_Inclusion_1_test_left.png";
-// const right_button = "Movie4_Inclusion_1_test_right.png";
-// const button = [left_button, right_button];
-// const trial = {
-//     type: jsPsychImageButtonResponse,
-//     stimulus: `${BASE_DIR}/img/${test_image}`,
-//     stimulus_width: 1024,
-//     stimulus_height: 267,
-//     choices: ["0", "1"],
-//     button_html: (choice, choice_index) =>
-//       `<button class="jspsych-btn" style="margin: 10px 80px;"><img src="${BASE_DIR}/img/${button[choice_index]}"  width="397" height="172"></img></button>`,
-//     margin_horizontal: "500px",
-//     prompt:
-//       "PARENTS: please click the button your child points to if they are unable to click themselves",
-//     response_allowed_while_playing: SKIP_ALLOWED,
-//     // extensions: [{ type: chsRecord.TrialRecordExtension }],  // TODO turn on
-//   };
-
-const video_name = "Movie5_Inclusion2_top.mp4";
-const left_button = "Movie5_Inclusion2_left.mp4";
-const right_button = "Movie5_Inclusion2_right.mp4";
+const video_name = "Movie7_A_EasyMonotonic_1_top.mp4";
+const left_button = "Movie7_A_EasyMonotonic_1_left.mp4";
+const right_button = "Movie7_A_EasyMonotonic_1_right.mp4";
 const trial = makeChoiceTrial(video_name, left_button, right_button);
 timeline.push(trial);
 
@@ -123,141 +107,143 @@ timeline.push(trial);
 
 // // ===== STIMULI ===========================================
 
-// const intro = [
-//     makeVideoTrial("nicole_intro.mp4"),
-//     makeVideoTrial("Movie1_Introduction.mp4"),
-//     makeVideoTrial("Movie2_Instructions.mp4"),
-// ];
-// timeline = timeline.concat(intro);
+const intro = [
+    makeVideoTrial("nicole_intro.mp4"),
+    makeVideoTrial("Movie1_Introduction.mp4"),
+    makeVideoTrial("Movie2_Instructions.mp4"),
+];
+timeline = timeline.concat(intro);
 
-// // TODO?
-// // const warmup = [];
-// // timeline = timeline.concat(warmup);
-
-// const inclusiontrial1 = [
-//   makeVideoTrial("Movie3_Inclusion1_video.mp4"),
-//   makeChoiceTrial("Movie4_Inclusion1_test.png"),
-//   makeVideoTrial("Movie5_LetsTryAnother.mp4"),
-// ];
-// timeline = timeline.concat(inclusiontrial1);
-
-// const inclusiontrial2 = [
-//   makeVideoTrial("Movie6_Inclusion2_video.mp4"),
-//   makeChoiceTrial("Movie7_Inclusion2_test.png"),
-//   makeVideoTrial("Movie8_LetsStart.mp4"),
-// ];
-// timeline = timeline.concat(inclusiontrial2);
+const inclusiontrials = [
+  makeChoiceTrial(
+    "Movie3_Inclusion1_top.mp4", 
+    "Movie3_Inclusion1_left.mp4", 
+    "Movie3_Inclusion1_right.mp4"
+  ),
+  makeVideoTrial("Movie4_LetsTryAnother.mp4"),
+  makeChoiceTrial(
+    "Movie5_Inclusion2_top.mp4", 
+    "Movie5_Inclusion2_left.mp4", 
+    "Movie5_Inclusion2_right.mp4"
+  ),
+  makeVideoTrial("Movie6_LetsStart.mp4"),
+];
+timeline = timeline.concat(inclusiontrials);
 
 // // ===== CONDITION A =======================================
-// const trial1a = [
-//     makeVideoTrial("Movie9_A_EasyMonotonic_1_video.mp4"),
-//     makeChoiceTrial("Movie10_A_EasyMonotonic_1_test.png"),
-// ];
+const trialsA = [
+  makeChoiceTrial(
+    "Movie7_A_EasyMonotonic_1_top.mp4",
+    "Movie7_A_EasyMonotonic_1_left.mp4",
+    "Movie7_A_EasyMonotonic_1_right.mp4",
+  ),
+  makeChoiceTrial(
+      "Movie9_A_EasySymmetric_1_top.mp4",
+      "Movie9_A_EasySymmetric_1_left.mp4",
+      "Movie9_A_EasySymmetric_1_right.mp4",
+  ),
+  makeChoiceTrial(
+      "Movie11_A_HardMonotonic_1_top.mp4",
+      "Movie11_A_HardMonotonic_1_left.mp4",
+      "Movie11_A_HardMonotonic_1_right.mp4",
+  ),
+  makeChoiceTrial(
+      "Movie13_A_HardSymmetric_1_top.mp4",
+      "Movie13_A_HardSymmetric_1_left.mp4",
+      "Movie13_A_HardSymmetric_1_right.mp4",
+  ),
+  makeChoiceTrial(
+      "Movie15_A_EasyMonotonic_2_top.mp4",
+      "Movie15_A_EasyMonotonic_2_left.mp4",
+      "Movie15_A_EasyMonotonic_2_right.mp4",
+  ),
+  makeChoiceTrial(
+      "Movie17_A_EasySymmetric_2_top.mp4",
+      "Movie17_A_EasySymmetric_2_left.mp4",
+      "Movie17_A_EasySymmetric_2_right.mp4",
+  ),
+  makeChoiceTrial(
+      "Movie19_A_HardMonotonic_2_top.mp4",
+      "Movie19_A_HardMonotonic_2_left.mp4",
+      "Movie19_A_HardMonotonic_2_right.mp4",
+  ),
+  makeChoiceTrial(
+      "Movie21_A_HardSymmetric_2_top.mp4",
+      "Movie21_A_HardSymmetric_2_left.mp4",
+      "Movie21_A_HardSymmetric_2_right.mp4",
+  )
+];
 
-// const trial2a = [
-//     makeVideoTrial("Movie12_A_EasySymmetric_1_video.mp4"),
-//     makeChoiceTrial("Movie13_A_EasySymmetric_1_test.png"),
-// ];
+const trialsB = [
+  makeChoiceTrial(
+    "Movie7_B_EasyMonotonic_1_top.mp4",
+    "Movie7_B_EasyMonotonic_1_left.mp4",
+    "Movie7_B_EasyMonotonic_1_right.mp4",
+  ),
+  makeChoiceTrial(
+      "Movie9_B_EasySymmetric_1_top.mp4",
+      "Movie9_B_EasySymmetric_1_left.mp4",
+      "Movie9_B_EasySymmetric_1_right.mp4",
+  ),
+  makeChoiceTrial(
+      "Movie11_B_HardMonotonic_1_top.mp4",
+      "Movie11_B_HardMonotonic_1_left.mp4",
+      "Movie11_B_HardMonotonic_1_right.mp4",
+  ),
+  makeChoiceTrial(
+      "Movie13_B_HardSymmetric_1_top.mp4",
+      "Movie13_B_HardSymmetric_1_left.mp4",
+      "Movie13_B_HardSymmetric_1_right.mp4",
+  ),
+  makeChoiceTrial(
+      "Movie15_B_EasyMonotonic_2_top.mp4",
+      "Movie15_B_EasyMonotonic_2_left.mp4",
+      "Movie15_B_EasyMonotonic_2_right.mp4",
+  ),
+  makeChoiceTrial(
+      "Movie17_B_EasySymmetric_2_top.mp4",
+      "Movie17_B_EasySymmetric_2_left.mp4",
+      "Movie17_B_EasySymmetric_2_right.mp4",
+  ),
+  makeChoiceTrial(
+      "Movie19_B_HardMonotonic_2_top.mp4",
+      "Movie19_B_HardMonotonic_2_left.mp4",
+      "Movie19_B_HardMonotonic_2_right.mp4",
+  ),
+  makeChoiceTrial(
+      "Movie21_B_HardSymmetric_2_top.mp4",
+      "Movie21_B_HardSymmetric_2_left.mp4",
+      "Movie21_B_HardSymmetric_2_right.mp4",
+  )
+];
 
-// const trial3a = [
-//     makeVideoTrial("Movie15_A_HardMonotonic_1_video.mp4"),
-//     makeChoiceTrial("Movie16_A_HardMonotonic_1_test.png"),
-// ];
+const more = [
+  makeVideoTrial("Movie8_7more.mp4"),
+  makeVideoTrial("Movie10_6more.mp4"),
+  makeVideoTrial("Movie12_5more.mp4"),
+  makeVideoTrial("Movie14_4more.mp4"),
+  makeVideoTrial("Movie16_3more.mp4"),
+  makeVideoTrial("Movie18_2more.mp4"),
+  makeVideoTrial("Movie20_1more.mp4"),
+  makeVideoTrial("Movie22_AllDone.mp4"),
+];
 
-// const trial4a = [
-//     makeVideoTrial("Movie18_A_HardSymmetric_1_video.mp4"),
-//     makeChoiceTrial("Movie19_A_HardSymmetric_1_test.png"),
-// ];
+// ===== COMBINE STIMULI ===================================
 
-// const trial5a = [
-//     makeVideoTrial("Movie21_A_EasyMonotonic_2_video.mp4"),
-//     makeChoiceTrial("Movie22_A_EasyMonotonic_2_test.png"),
-// ];
+let condA = [];
+let condB = [];
+for (let i = 0; i < 6; i++) {
+  condA = condA.concat(trialsA[i]);
+  condB = condB.concat(trialsB[i]);
+  condA.push(more[i]);
+  condB.push(more[i]);
+}
 
-// const trial6a = [
-//     makeVideoTrial("Movie24_A_EasySymmetric_2_video.mp4"),
-//     makeChoiceTrial("Movie25_A_EasySymmetric_2_test.png"),
-// ];
-
-// const trial7a = [
-//     makeVideoTrial("Movie27_A_HardMonotonic_2_video.mp4"),
-//     makeChoiceTrial("Movie28_A_HardMonotonic_2_test.png"),
-// ];
-
-// const trial8a = [
-//     makeVideoTrial("Movie30_A_HardSymmetric_2_video.mp4"),
-//     makeChoiceTrial("Movie31_A_HardSymmetric_2_test.png"),
-// ];
-
-// const trialsA = [trial1a, trial2a, trial3a, trial4a, trial5a, trial6a, trial7a, trial8a];
-
-// // ===== CONDITION B =======================================
-
-// const trial1b = [
-//     makeVideoTrial("Movie9_B_EasyMonotonic_1_video.mp4"),
-//     makeChoiceTrial("Movie10_B_EasyMonotonic_1_test.png"),
-// ];
-
-// const trial2b = [
-//     makeVideoTrial("Movie12_B_EasySymmetric_1_video.mp4"),
-//     makeChoiceTrial("Movie13_B_EasySymmetric_1_test.png"),
-// ];
-
-// const trial3b = [
-//     makeVideoTrial("Movie15_B_HardMonotonic_1_video.mp4"),
-//     makeChoiceTrial("Movie16_B_HardMonotonic_1_test.png"),
-// ];
-
-// const trial4b = [
-//     makeVideoTrial("Movie18_B_HardSymmetric_1_video.mp4"),
-//     makeChoiceTrial("Movie19_B_HardSymmetric_1_test.png"),
-// ];
-
-// const trial5b = [
-//     makeVideoTrial("Movie21_B_EasyMonotonic_2_video.mp4"),
-//     makeChoiceTrial("Movie22_B_EasyMonotonic_2_test.png"),
-// ];
-
-// const trial6b = [
-//     makeVideoTrial("Movie24_B_EasySymmetric_2_video.mp4"),
-//     makeChoiceTrial("Movie25_B_EasySymmetric_2_test.png"),
-// ];
-
-// const trial7b = [
-//     makeVideoTrial("Movie27_B_HardMonotonic_2_video.mp4"),
-//     makeChoiceTrial("Movie28_B_HardMonotonic_2_test.png"),
-// ];
-
-// const trial8b = [
-//     makeVideoTrial("Movie30_B_HardSymmetric_2_video.mp4"),
-//     makeChoiceTrial("Movie31_B_HardSymmetric_2_test.png"),
-// ];
-
-// const trialsB = [trial1b, trial2b, trial3b, trial4b, trial5b, trial6b, trial7b, trial8b];
-
-// // ===== COMBINE STIMULI ===================================
-
-// const more = [
-//   makeVideoTrial("Movie11_7more.mp4"),
-//   makeVideoTrial("Movie14_6more.mp4"),
-//   makeVideoTrial("Movie17_5more.mp4"),
-//   makeVideoTrial("Movie20_4more.mp4"),
-//   makeVideoTrial("Movie23_3more.mp4"),
-//   makeVideoTrial("Movie26_2more.mp4"),
-//   makeVideoTrial("Movie29_1more.mp4"),
-//   makeVideoTrial("Movie32_AllDone.mp4"),
-// ];
-
-// let condA = [];
-// let condB = [];
-// for (let i = 0; i < 6; i++) {
-//   condA = condA.concat(trialsA[i]);
-//   condB = condB.concat(trialsB[i]);
-//   condA.push(more[i]);
-//   condB.push(more[i]);
-// }
-
-// TODO assign to a condition
+const all_conditions = {'A': cond_A, 'B': cond_B};
+const condition_assignment = jsPsych.randomization.sampleWithoutReplacement(['A', 'B'], 1)[0];
+jsPsych.data.addProperties({'condition': condition_assignment});
+const selected_condition_trials = all_conditions[condition_assignment];
+timeline = timeline.concat(selected_condition_trials.flat());
 
 // ===== WRAP UP ===============================================================================
 
@@ -265,8 +251,12 @@ timeline.push(trial);
 // timeline.push(exitSurvey);
 
 // const site = '<a href="https://eccl.mit.edu">https://www.eccl.mit.edu</a>';
-// const debrief_string =
-//   "We showed your child a sample box with three shapes. Children were asked to pick which of two other boxes of shapes was the best match for the first box. One box was a distractor with an irrelevant relationship among the shapes; the other box (the matching box) had a relationship among the shapes similar to the relationship in the first box (e.g. the three shapes progressively got bigger or smaller, or the relationship was symmetric with two large shapes flanking a small shape or vice versa). <br><br>Across trials, children saw both 'easy' matches (the relationships between the sample and the match were identical) and 'hard' matches (the relationship in the match was the inverse of the relationship in the sample-- for instance if the shapes in the sample box had gone from smallest on the left to largest on the right, the shapes in the box went from largest on the left to smallest on the right). Previous, in-person research had suggested that although young children could succeed on easy matches, they struggled with hard matches. Here we aimed to replicate the result in an online study </br></br><br> This is the first study in a planned series of studies on children's understanding of relational matches. We think that three-year-olds may struggle with this kind of task because children are looking not only at the relationship between the shapes in the boxes but also at the relationship among the boxes themselves. In the current set up, there is a matching box and a distractor box: thus, one of the boxes has no relationship at all with the others. We believe that young children will have an easier time recognizing relational matches in a context where every box has a match (i.e., there are no distractors). That is, we believe that if we show children two sample boxes (each with a different relationship among the shapes) and two kinds of matching boxes (each matching to one of the relationships), children will be more likely to recognize the contrasting relationships and succeed at the task. However, we needed to replicate the failure first before going on to test the conditions that might lead children to succeed.</br></br> <br><b>Why is this important?</b></br></br><br> This study is important for three reasons. First, replicating children's failure to infer abstract, non-identical relationships will show both that the original finding is robust and that we can replicate in-person laboratory experiments online. Second, this will allow us to build on the initial study, potentially showing that even young children can in fact infer abstract, non-identical, higher-order relationships when they are not faced with irrelevant distractors. This would suggest the importance of how we teach and present information to young children. Showing children one matching pair and one distractor may make it difficult for children to know what kind of relationship they should attend to; by contrast, showing children two different matching relationships may serve to highlight the contrast and allow children to more readily detect the alignment between the samples and the matches. Overall, children may do better in 'errorless' contexts where 'everything has an answer' than in contexts where one answer is right and one is wrong.</br></br> <br>If you want to learn more about studies similar to this one, please visit our lab website at " +
+const debrief_string = `We showed your child a sample box with three shapes. Children were asked to pick which of two other boxes of shapes was the best match for the first box. One box was a distractor with an irrelevant relationship among the shapes; the other box (the matching box) had a relationship among the shapes similar to the relationship in the first box (e.g. the three shapes progressively got bigger or smaller, or the relationship was symmetric with two large shapes flanking a small shape or vice versa). 
+<br><br>Across trials, children saw both 'easy' matches (the relationships between the sample and the match were identical) and 'hard' matches (the relationship in the match was the inverse of the relationship in the sample-- for instance if the shapes in the sample box had gone from smallest on the left to largest on the right, the shapes in the box went from largest on the left to smallest on the right). Previous, in-person research had suggested that although young children could succeed on easy matches, they struggled with hard matches. Here we aimed to replicate the result in an online study </br></br>
+<br><br> This is the first study in a planned series of studies on children's understanding of relational matches. We think that three-year-olds may struggle with this kind of task because children are looking not only at the relationship between the shapes in the boxes but also at the relationship among the boxes themselves. In the current set up, there is a matching box and a distractor box: thus, one of the boxes has no relationship at all with the others. We believe that young children will have an easier time recognizing relational matches in a context where every box has a match (i.e., there are no distractors). That is, we believe that if we show children two sample boxes (each with a different relationship among the shapes) and two kinds of matching boxes (each matching to one of the relationships), children will be more likely to recognize the contrasting relationships and succeed at the task. However, we needed to replicate the failure first before going on to test the conditions that might lead children to succeed.</br></br> 
+<br><br>Why is this important?</br></br>
+<br><br> This study is important for three reasons. First, replicating children's failure to infer abstract, non-identical relationships will show both that the original finding is robust and that we can replicate in-person laboratory experiments online. Second, this will allow us to build on the initial study, potentially showing that even young children can in fact infer abstract, non-identical, higher-order relationships when they are not faced with irrelevant distractors. This would suggest the importance of how we teach and present information to young children. Showing children one matching pair and one distractor may make it difficult for children to know what kind of relationship they should attend to; by contrast, showing children two different matching relationships may serve to highlight the contrast and allow children to more readily detect the alignment between the samples and the matches. Overall, children may do better in 'errorless' contexts where 'everything has an answer' than in contexts where one answer is right and one is wrong.</br></br> 
+<br>If you want to learn more about studies similar to this one, please visit our lab website at ` +
 //   site +
 //   "\nThe experiment is complete. Please close this window.";
 // const debrief = {
