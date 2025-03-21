@@ -91,10 +91,10 @@ const instructions = [
 ];
 timeline = timeline.concat(instructions);
 
-// const startRec = {
-//   type: chsRecord.StartRecordPlugin,
-// };
-// timeline.push(startRec);
+const startRec = {
+  type: chsRecord.StartRecordPlugin,
+};
+timeline.push(startRec);
 
 // // ===== STIMULI ===========================================
 
@@ -239,8 +239,8 @@ console.log(condition_assignment);  // TODO its here for debug purposes
 
 // ===== WRAP UP ===============================================================================
 
-// const exitSurvey = { type: chsSurvey.ExitSurveyPlugin };
-// timeline.push(exitSurvey);
+const exitSurvey = { type: chsSurvey.ExitSurveyPlugin };
+timeline.push(exitSurvey);
 
 const site = '<a href="https://eccl.mit.edu">https://www.eccl.mit.edu</a>';
 const debrief_string = `We showed your child a sample box with three shapes. Children were asked to pick which of two other boxes of shapes was the best match for the first box. One box was a distractor with an irrelevant relationship among the shapes; the other box (the matching box) had a relationship among the shapes similar to the relationship in the first box (e.g. the three shapes progressively got bigger or smaller, or the relationship was symmetric with two large shapes flanking a small shape or vice versa). <br><br>
@@ -259,10 +259,10 @@ const debrief = {
 };
 timeline.push(debrief);
 
-// const stop = {
-//   type: chsRecord.StopRecordPlugin,
-// };
-// timeline.push(stop);
+const stop = {
+  type: chsRecord.StopRecordPlugin,
+};
+timeline.push(stop);
 
 console.log(timeline); // for debug purposes
 jsPsych.run(timeline);
